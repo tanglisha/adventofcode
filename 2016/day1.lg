@@ -1,5 +1,7 @@
 #! /usr/bin/logo
 
+;; Original problem: http://adventofcode.com/2016/day/1
+
 ;; vim regex
 ;; :%s/L\(\d\),\{0,1\}/\rleft 90\rforward \1/g
 ;; :%s/R\(\d\),\{0,1\}/\rright 90\rforward \1/g
@@ -7,6 +9,8 @@
 setpos [0 0]
 
 pd
+
+make :poslist []
 
 left 90
 forward 4 

@@ -1,0 +1,51 @@
+#! /usr/bin/logo
+
+make "sizeofbutton 1
+make "leftbounds -:sizeofbutton
+make "rightbounds :sizeofbutton
+make "upperbounds :sizeofbutton
+make "lowerbounds -:sizeofbutton
+
+to oktogoup
+  localmake "y first butfirst pos
+
+  ifelse equal? y :upperbounds 
+    [output FALSE]
+    [output TRUE]
+end
+
+to U
+  if oktogoup
+  [setheading 0
+  forward 1]
+end
+
+to D
+  setheading 180
+  forward 1
+end
+
+to R
+  setheading 90
+  forward 1
+end
+
+to L
+  setheading 270
+  forward 1
+end
+
+to find :commands
+  if empty? :commands [output stop]
+  run :commands
+end
+
+to press :commands
+  if empty? :commands [output stop]
+  find first :commands
+  press butfirst :commands
+end
+
+press [[U L L] [R R D D D] [L U R D L] [U U U U D]]
+
+
