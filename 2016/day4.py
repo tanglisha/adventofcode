@@ -1,4 +1,5 @@
 import re
+import string
 from collections import Counter
 
 p = re.compile(r"^(.*)\[(.*)\]$")
@@ -40,5 +41,19 @@ def isValidCode(line):
 def getSectorCode(line):
     return int(re.search(numbersOnly, line[0]).group())
 
-sectorCodes = [getSectorCode(x) for x in codes if isValidCode(x)]
-print sum(sectorCodes)
+def cesar(letter, shift):
+    alphabet = string.ascii_lowercase
+    shortened_shift = shift % len(alphabet)
+    shifted_alphabet = alphabet[shortened_shift:] + alphabet[:shortened_shift]
+    table = string.maketrans(alphabet, shifted_alphabet)
+    return letter.translate(table)
+
+def translate(word, shift):
+    return [cesar(x, shift) for x in word]
+
+validCodes = {x[0]:{"sectorCode": getSectorCode(x),
+    "checksum": x[1]} for x in codes if isValidCode(x)}
+print "There are %s real rooms" % sum([x["sectorCode"] for x in validCodes.values()])
+
+decrypted = [cesar(x, y["sectorCode"]) for x, y in validCodes.items()]
+print [x for x in decrypted if x.find("orth")>=0]
