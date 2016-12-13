@@ -1,0 +1,57 @@
+#! /usr/bin/logo
+
+make "a 0
+make "b 0
+make "c 0
+make "d 0
+make "index 1
+
+;;local [a b c d index]
+
+to cpy :int :register
+  make :register :int
+end
+
+to inc :register
+  make :register (thing :register)+1
+end
+
+to dec :register
+  ;;if equal? :register "d [print :register]
+  make :register (thing :register)-1
+  ;;print (thing :register)
+end
+
+to jnz :zero :distance
+  if equal? :zero 0 [stop]
+  make "index :index+:distance
+end
+
+to keep.reading 
+  output less? :index count :lines
+end
+
+to getline
+  output item :index :lines
+end
+
+to readline
+  inc "index
+  run getline
+end
+
+to readlines :lines :index
+  if stop.reading :lines [stop]
+
+  while keep.reading [readline]
+end
+
+make "lines [[cpy 1 "a] [cpy 1 "b] [cpy 26 "d] [jnz :c 2] [jnz 1 5] [cpy 7 "c] [inc "d] [dec "c] [jnz :c -2] [cpy :a "c] [inc "a] [dec "b] [jnz :b -2] [cpy :c "b] [dec "d] [jnz :d -6] [cpy 17 "c] [cpy 18 "d] [inc "a] [dec "d] [jnz :d -2] [dec "c] [jnz :c -5]]
+
+readlines :realLines 0
+
+print :a
+print :b
+print :c
+print :d
+print :index
